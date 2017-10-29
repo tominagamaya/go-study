@@ -23,5 +23,5 @@ func main() {
 		fmt.Fprintf(os.Stderr, "argument must be integer: %s\n", err)
 		os.Exit(1)
 	}
-	fmt.Printf("%d", fibTool(i))
+	fmt.Printf("%d\n", fibTool(i))
 }
