@@ -27,13 +27,18 @@ func main() {
 
 	// コピー元ファイルを一行ずつ読込
 	lines := make([]byte, 0)
-	className := strings.Replace(createFile, ".java", "", 1)
+	// 拡張子を除いたクラス名を取得
+	className := strings.Split(createFile, ".")[0]
 	scanner := bufio.NewScanner(cpFile)
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		// クラス名とパッケージを置換
-		if strings.Contains(line, "sample") {
+		// パッケージ名を置換
+		if strings.Contains(line, "package") && strings.Contains(line, "sample") {
+			pkg := strings.Split(pkgName, "/")
+			line = strings.Replace(line, "sample", pkg[len(pkg)-1], 1) + "\n"
+		// クラス名を置換
+		} else if strings.Contains(line, "sample") {
 			line = strings.Replace(line, "sample", className, 1) + "\n"
 		} else {
 			line = line + "\n"
@@ -42,4 +47,3 @@ func main() {
 	}
 	newFile.Write(lines)
 }
-
